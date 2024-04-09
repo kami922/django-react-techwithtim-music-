@@ -1,15 +1,14 @@
 import React, { Component } from "react";
 import RoomJoinPage from "./RoomJoinPage";
 import CreateRoomPage from "./CreateRoomPage";
+import Room from "./Room";
 import {
-  BrowserRouter,
-  Routes,
+  BrowserRouter as Router,
+  Switch,
   Route,
   Link,
-  Navigate, // Replaces Redirect
+  Redirect,
 } from "react-router-dom";
-import Room from "./Room"
-
 
 export default class HomePage extends Component {
   constructor(props) {
@@ -18,16 +17,16 @@ export default class HomePage extends Component {
 
   render() {
     return (
-      <BrowserRouter>
-        <Routes>
-          <Route path="/join" element={<RoomJoinPage />} />
-          <Route path="/create" element={<CreateRoomPage />} />
-          <Route path="/room/:roomCode" element={<Room />} />
-          <Route path="/" element={<p> This is the Home Page </p>} />
-          {/* Catch-all route for unmatched paths */}
-          {/* <Route path="*" element={<Navigate to="/" />} /> */}
-        </Routes>
-      </BrowserRouter>
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            <p>This is the home page</p>
+          </Route>
+          <Route path="/join" component={RoomJoinPage} />
+          <Route path="/create" component={CreateRoomPage} />
+          <Route path="/room/:roomCode" component={Room} />
+        </Switch>
+      </Router>
     );
   }
 }
